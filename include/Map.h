@@ -59,6 +59,8 @@ public:
 
     void clear();
 
+    bool Save(const string &filename);
+
     std::vector<KeyFrame*> mvpKeyFrameOrigins;
 
     std::mutex mMutexMapUpdate;
@@ -78,6 +80,10 @@ protected:
     int mnBigChangeIdx;
 
     std::mutex mMutexMap;
+    void _WriteMapPoint(ofstream &f, MapPoint* mp);
+    void _WriteKeyFrame(ofstream &f, KeyFrame* kf,  map<MapPoint*, unsigned long int>& idx_of_mp);
+    MapPoint* _ReadMapPoint(ifstream &f);
+    KeyFrame* _ReadKeyFrame(ifstream &f, ORBVocabulary &voc, std::vector<MapPoint*> amp, ORBextractor* ex);
 };
 
 } //namespace ORB_SLAM

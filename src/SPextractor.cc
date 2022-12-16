@@ -134,6 +134,29 @@ void ExtractorNode::DivideNode(ExtractorNode &n1, ExtractorNode &n2, ExtractorNo
 
 }
 
+#ifdef MINIMISE_RAND
+bool sortNodes(pair<int,ExtractorNode*> a, pair<int,ExtractorNode*> b) {
+   if (a.first < b.first) return true;
+   if (a.first > b.first) return false;
+   if (a.second->UL.x < b.second->UL.x) return true;
+   if (a.second->UL.x > b.second->UL.x) return false;
+   if (a.second->UL.y < b.second->UL.y) return true;
+   if (a.second->UL.y > b.second->UL.y) return false;
+   if (a.second->UR.x < b.second->UR.x) return true;
+   if (a.second->UR.x > b.second->UR.x) return false;
+   if (a.second->UR.y < b.second->UR.y) return true;
+   if (a.second->UR.y > b.second->UR.y) return false;
+   if (a.second->BL.x < b.second->BL.x) return true;
+   if (a.second->BL.x > b.second->BL.x) return false;
+   if (a.second->BL.y < b.second->BL.y) return true;
+   if (a.second->BL.y > b.second->BL.y) return false;
+   if (a.second->BR.x < b.second->BR.x) return true;
+   if (a.second->BR.x > b.second->BR.x) return false; 
+   if (a.second->BR.y < b.second->BR.y) return true;
+   if (a.second->BR.y > b.second->BR.y) return false; 
+   return false; // should never get here
+}
+#endif
 
 SPextractor::SPextractor(int _nfeatures, float _scaleFactor, int _nlevels,
          float _iniThFAST, float _minThFAST):
@@ -325,7 +348,13 @@ vector<cv::KeyPoint> SPextractor::DistributeOctTree(const vector<cv::KeyPoint>& 
                 vector<pair<int,ExtractorNode*> > vPrevSizeAndPointerToNode = vSizeAndPointerToNode;
                 vSizeAndPointerToNode.clear();
 
-                sort(vPrevSizeAndPointerToNode.begin(),vPrevSizeAndPointerToNode.end());
+                // sort(vPrevSizeAndPointerToNode.begin(),vPrevSizeAndPointerToNode.end());
+                #ifdef MINIMISE_RAND
+					sort(vPrevSizeAndPointerToNode.begin(),vPrevSizeAndPointerToNode.end(), sortNodes);
+				#else
+	                sort(vPrevSizeAndPointerToNode.begin(),vPrevSizeAndPointerToNode.end());
+                #endif
+                
                 for(int j=vPrevSizeAndPointerToNode.size()-1;j>=0;j--)
                 {
                     ExtractorNode n1,n2,n3,n4;
