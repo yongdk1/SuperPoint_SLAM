@@ -58,7 +58,7 @@ double tframe;
 enum orbslam_input_mode {mono,stereo,rgbd,automatic};
 
 static orbslam_input_mode input_mode;
-static const orbslam_input_mode default_input_mode = orbslam_input_mode::automatic;
+static const orbslam_input_mode default_input_mode = orbslam_input_mode::mono;
 
 static std::string settings_file;
 static std::string vocabulary_file;
