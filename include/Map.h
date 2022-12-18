@@ -84,7 +84,7 @@ protected:
 
 
     void _WriteMapPoint(std::ofstream &f, MapPoint* mp);
-    void _WriteKeyFrame(std::ofstream &f, KeyFrame* kf,  map<MapPoint*, unsigned long int>& idx_of_mp);
+    void _WriteKeyFrame(std::ofstream &f, KeyFrame* kf,  std::map<MapPoint*, unsigned long int>& idx_of_mp);
     MapPoint* _ReadMapPoint(std::ifstream &f);
     KeyFrame* _ReadKeyFrame(std::ifstream &f, ORBVocabulary &voc, std::vector<MapPoint*> amp, ORBextractor* ex);
 };
